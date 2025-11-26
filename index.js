@@ -56,5 +56,5 @@ app.get("/", (req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server running at https://bmw-drivex-server.vercel.app:${port}`);
+  console.log(`✅ Server running on port ${port}`);
 });
