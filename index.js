@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 const uri = process.env.MONGODB_URI;
-// MongoDB client
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -41,6 +41,21 @@ async function run() {
         });
       }
     });
+    const { ObjectId } = require('mongodb');
+
+app.get("/cars/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const car = await carsCollection.findOne({ _id: new ObjectId(id) });
+    if (!car) return res.status(404).send({ message: "Car not found" });
+    res.send(car);
+  } catch (err) {
+    res.status(500).send({
+      message: "Error fetching car",
+      error: err,
+    });
+  }
+});
 
   } catch (err) {
     console.log("DB Error:", err);
